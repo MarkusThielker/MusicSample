@@ -14,13 +14,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // setup view binding
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // get navigation controller
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
+        // connect action bar with navController
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigationFragmentHome,
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        // connect bottom navigation with navController in your activity
+        // connect bottom navigation with navController
         val bottomNavigation = binding.bottomNavigation
         bottomNavigation.setupWithNavController(navController)
     }
