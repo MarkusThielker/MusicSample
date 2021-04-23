@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/navigationFragmentHome">
+
+    <fragment
+        android:id="@+id/navigationFragmentHome"
+        android:name="de.markus_thielker.uist_musicplayer.fragments.home.HomeFragment"
+        android:label="@string/title_nav_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigationFragmentFavorites"
+        android:name="de.markus_thielker.uist_musicplayer.fragments.favorites.FavoritesFragment"
+        android:label="@string/title_nav_favorites"
+        tools:layout="@layout/fragment_favorites" />
+
+    <fragment
+        android:id="@+id/navigationFragmentPlayer"
+        android:name="de.markus_thielker.uist_musicplayer.fragments.player.PlayerFragment"
+        tools:layout="@layout/fragment_player" />
+
+    <fragment
+        android:id="@+id/navigationFragmentSearch"
+        android:name="de.markus_thielker.uist_musicplayer.fragments.search.SearchFragment"
+        android:label="@string/title_nav_search"
+        tools:layout="@layout/fragment_search" />
+
+    <action
+        android:id="@+id/action_global_navigationFragmentPlayer"
+        app:destination="@id/navigationFragmentPlayer" />
+
+</navigation>
