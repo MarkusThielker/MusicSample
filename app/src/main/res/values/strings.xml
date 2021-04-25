@@ -2,8 +2,13 @@
 
     <string name="app_name">MusicPlayer</string>
 
+    <!-- navigation strings -->
     <string name="title_nav_home">Home</string>
     <string name="title_nav_search">Search</string>
     <string name="title_nav_favorites">Favorites</string>
+
+    <!-- layout placeholders -->
+    <string name="title_placeholder">Title placeholder</string>
+    <string name="artist_placeholder">Artist placeholder</string>
 
 </resources>
