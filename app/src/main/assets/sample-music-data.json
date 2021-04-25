@@ -1,0 +1,162 @@
+[
+  {
+    "sid": 1,
+    "title": "Royalty",
+    "artist": "Maestro Chives",
+    "feature": "Egzod",
+    "duration": 166,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 2,
+    "title": "Fall To My Grave",
+    "artist": "Silent Child",
+    "feature": "ruindkid, SVRRIC",
+    "duration": 219,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 3,
+    "title": "Father",
+    "artist": "Diamond Eyes",
+    "feature": null,
+    "duration": 237,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 4,
+    "title": "Elevate",
+    "artist": "Arcando",
+    "feature": "Fabian Mazur",
+    "duration": 172,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 5,
+    "title": "Overdosin",
+    "artist": "PHI NIX",
+    "feature": "Hoober",
+    "duration": 183,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 6,
+    "title": "Young & Wild & Free",
+    "artist": "Vosai",
+    "feature": null,
+    "duration": 151,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 7,
+    "title": "You And Me",
+    "artist": "Facading",
+    "feature": null,
+    "duration": 149,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 8,
+    "title": "Black Sunrise",
+    "artist": "Denniz Jamm",
+    "feature": "Andreas Stone",
+    "duration": 232,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 9,
+    "title": "Never Give Up",
+    "artist": "Steve Hartz",
+    "feature": null,
+    "duration": 207,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 10,
+    "title": "Crossed The Line",
+    "artist": "Linn Sandin",
+    "feature": "Facading, Vosai",
+    "duration": 147,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 11,
+    "title": "Losing Control",
+    "artist": "Mendum",
+    "feature": "JPB",
+    "duration": 187,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 12,
+    "title": "Demons",
+    "artist": "NIVIRO",
+    "feature": null,
+    "duration": 192,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 13,
+    "title": "Never Stop",
+    "artist": "Todd Helder",
+    "feature": null,
+    "duration": 126,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 14,
+    "title": "Dance With Me",
+    "artist": "Alexis Donn",
+    "feature": "Unknown Brain",
+    "duration": 163,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 15,
+    "title": "Jungle Of Love",
+    "artist": "Unknown Brain",
+    "feature": "Glaceo",
+    "duration": 142,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  },
+  {
+    "sid": 16,
+    "title": "Where It All Began",
+    "artist": "Danyka Nadeau",
+    "feature": "Electro-Light",
+    "duration": 231,
+    "favorite": false,
+    "srcAudio": "",
+    "srcCover": ""
+  }
+]
