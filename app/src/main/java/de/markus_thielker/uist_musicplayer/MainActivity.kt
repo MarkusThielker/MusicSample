@@ -2,6 +2,7 @@ package de.markus_thielker.uist_musicplayer
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -23,6 +24,19 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+
+            if (destination.id == R.id.navigationFragmentPlayer) {
+                supportActionBar?.hide()
+                binding.floatingActionButton.hide()
+                binding.bottomNavigation.visibility = View.GONE
+            } else {
+                supportActionBar?.show()
+                binding.floatingActionButton.show()
+                binding.bottomNavigation.visibility = View.VISIBLE
+            }
+        }
+
         // connect action bar with navController
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -36,6 +50,13 @@ class MainActivity : AppCompatActivity() {
         // connect bottom navigation with navController
         val bottomNavigation = binding.bottomNavigation
         bottomNavigation.setupWithNavController(navController)
+
+        // Floating button
+        val fab = binding.floatingActionButton
+        fab.setOnClickListener { view ->
+            navController.navigate(R.id.action_global_navigationFragmentPlayer)
+        }
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
