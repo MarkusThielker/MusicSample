@@ -1,6 +1,5 @@
 package de.markus_thielker.uist_musicplayer.fragments.player
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,13 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import de.markus_thielker.uist_musicplayer.R
 import de.markus_thielker.uist_musicplayer.databinding.FragmentPlayerBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.URL
 
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
@@ -79,19 +74,13 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             currentSong?.let {
                 binding.songName.text = currentSong.title
                 binding.artistName.text = currentSong.artist
-                CoroutineScope(Dispatchers.IO).launch {
 
-                    if(currentSong.srcCover.isNotEmpty()){
-                        val url = URL(currentSong.srcCover)
-                        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
-                        withContext(Dispatchers.Main) {
-                            binding.songImage.setImageBitmap(bmp)
-                        }
-                    }else{
-                        withContext(Dispatchers.Main) {
-                            binding.songImage.setImageResource(R.drawable.icon_music)
-                        }
-                    }
+                // if cover-src is available -> load image
+                if (currentSong.srcCover.isNotEmpty()) {
+                    Glide.with(requireContext())
+                        .load(currentSong.srcCover)
+                        .placeholder(R.drawable.icon_music)
+                        .into(binding.songImage)
                 }
             }
         }
