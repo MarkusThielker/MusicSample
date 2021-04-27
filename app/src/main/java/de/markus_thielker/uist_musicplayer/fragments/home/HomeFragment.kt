@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -18,8 +19,14 @@ import de.markus_thielker.uist_musicplayer.fragments.player.PlayerViewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    // view model variable
-    private lateinit var homeViewModel: HomeViewModel
+    // home view model access
+    private val homeViewModel: HomeViewModel by viewModels {
+        ViewModelProvider.AndroidViewModelFactory(
+            requireActivity().application
+        )
+    }
+
+    // player view model access
     private val playerViewModel: PlayerViewModel by activityViewModels()
 
     // view binding variables
@@ -33,11 +40,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
-        // create home view model
-        homeViewModel = ViewModelProvider
-            .AndroidViewModelFactory(requireActivity().application)
-            .create(HomeViewModel::class.java)
 
         setupRecyclerView()
 
