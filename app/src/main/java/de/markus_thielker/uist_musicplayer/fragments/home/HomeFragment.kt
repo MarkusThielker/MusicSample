@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
 import de.markus_thielker.uist_musicplayer.R
 import de.markus_thielker.uist_musicplayer.components.room.song.Song
 import de.markus_thielker.uist_musicplayer.databinding.FragmentHomeBinding
@@ -55,12 +56,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             findNavController().navigate(R.id.action_global_navigationFragmentPlayer)
         }
         // create adapter object
-        val songsAdapter = SongsAdapter(onItemClickListener)
+        val songsAdapter = SongsAdapter(requireContext(), onItemClickListener)
 
         // setup recycler view -> bind adapter
         binding.recyclerView.apply {
             adapter = songsAdapter
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = StaggeredGridLayoutManager(2, VERTICAL)
         }
 
         // set observer for song list

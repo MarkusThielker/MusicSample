@@ -1,15 +1,21 @@
 package de.markus_thielker.uist_musicplayer.fragments.home.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import de.markus_thielker.uist_musicplayer.R
 import de.markus_thielker.uist_musicplayer.components.room.song.Song
 import de.markus_thielker.uist_musicplayer.databinding.ItemCardSongLargeBinding
 
 
-class SongsAdapter(private val onItemClickListener: (item: Song) -> Unit) :
+class SongsAdapter(
+    private val context: Context,
+    private val onItemClickListener: (item: Song) -> Unit
+) :
     ListAdapter<Song, SongsAdapter.ViewHolder>(SongDiffCallback()) {
 
     class ViewHolder(
@@ -18,11 +24,20 @@ class SongsAdapter(private val onItemClickListener: (item: Song) -> Unit) :
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Song) {
+        fun bind(context: Context, item: Song) {
             binding.apply {
                 lblTitle.text = item.title
                 lblArtist.text = item.artist
-                cardParent.setOnClickListener{
+
+                // if cover-src is available -> load image
+                if (item.srcCover.isNotEmpty()) {
+                    Glide.with(context)
+                        .load(item.srcCover)
+                        .placeholder(R.drawable.icon_music)
+                        .into(imgView)
+                }
+
+                cardParent.setOnClickListener {
                     onItemClickListener.invoke(item)
                 }
             }
@@ -44,7 +59,7 @@ class SongsAdapter(private val onItemClickListener: (item: Song) -> Unit) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         val song = getItem(position)
-        viewHolder.bind(song)
+        viewHolder.bind(context, song)
     }
 }
 
