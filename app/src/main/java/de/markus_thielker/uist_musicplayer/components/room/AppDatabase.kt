@@ -25,6 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
     // singleton implementation
     companion object {
 
+        @Volatile
         private var instance: AppDatabase? = null
 
         // check for existing instance
