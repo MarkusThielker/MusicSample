@@ -1,16 +1,34 @@
 package de.markus_thielker.uist_musicplayer
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
+import android.util.Log.ASSERT
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import de.markus_thielker.uist_musicplayer.databinding.ActivityMainBinding
+import de.markus_thielker.uist_musicplayer.databinding.FragmentPlayerBinding
+import de.markus_thielker.uist_musicplayer.fragments.player.PlayerViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
 class MainActivity : AppCompatActivity() {
+    // view model variable
+    private val playerViewModel: PlayerViewModel by viewModels{
+        ViewModelProvider.AndroidViewModelFactory(application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +46,14 @@ class MainActivity : AppCompatActivity() {
 
             if (destination.id == R.id.navigationFragmentPlayer) {
                 supportActionBar?.hide()
-                binding.floatingActionButton.hide()
                 binding.bottomNavigation.visibility = View.GONE
+                binding.floatingActionButton.hide()
             } else {
                 supportActionBar?.show()
-                binding.floatingActionButton.show()
                 binding.bottomNavigation.visibility = View.VISIBLE
+                if(playerViewModel.currentSong.value != null){
+                    binding.floatingActionButton.show()
+                }
             }
         }
 
@@ -56,7 +76,15 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             navController.navigate(R.id.action_global_navigationFragmentPlayer)
         }
-
+        // set observer for song list
+        playerViewModel.currentSong.observe(this) { currentSong ->
+            Log.println(ASSERT,"Main Activity", currentSong?.title?:"null")
+            if (currentSong != null) {
+                fab.show()
+            }else{
+                fab.hide()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

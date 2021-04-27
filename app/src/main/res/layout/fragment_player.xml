@@ -13,11 +13,9 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        tools:src="@drawable/icon_music" />
 
     <ImageView
         android:id="@+id/topGradient"
@@ -66,7 +64,6 @@
             android:progressBackgroundTint="@color/secondary"
             app:layout_constraintBottom_toTopOf="@+id/musicButtons"
             app:layout_constraintEnd_toEndOf="@+id/playerControlsLayout"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/playerControlsLayout" />
 
         <LinearLayout

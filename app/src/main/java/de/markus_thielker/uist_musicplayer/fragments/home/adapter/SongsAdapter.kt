@@ -9,15 +9,22 @@ import de.markus_thielker.uist_musicplayer.components.room.song.Song
 import de.markus_thielker.uist_musicplayer.databinding.ItemCardSongLargeBinding
 
 
-class SongsAdapter : ListAdapter<Song, SongsAdapter.ViewHolder>(SongDiffCallback()) {
+class SongsAdapter(private val onItemClickListener: (item: Song) -> Unit) :
+    ListAdapter<Song, SongsAdapter.ViewHolder>(SongDiffCallback()) {
 
-    class ViewHolder(private val binding: ItemCardSongLargeBinding) :
+    class ViewHolder(
+        private val binding: ItemCardSongLargeBinding,
+        private val onItemClickListener: (item: Song) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Song) {
             binding.apply {
                 lblTitle.text = item.title
                 lblArtist.text = item.artist
+                cardParent.setOnClickListener{
+                    onItemClickListener.invoke(item)
+                }
             }
         }
     }
@@ -29,7 +36,7 @@ class SongsAdapter : ListAdapter<Song, SongsAdapter.ViewHolder>(SongDiffCallback
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ), onItemClickListener
         )
     }
 

@@ -1,17 +1,26 @@
 package de.markus_thielker.uist_musicplayer.fragments.player
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import de.markus_thielker.uist_musicplayer.R
 import de.markus_thielker.uist_musicplayer.databinding.FragmentPlayerBinding
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
+
+    // view model variable
+    private val playerViewModel: PlayerViewModel by activityViewModels()
 
     // view binding variables
     private var _binding: FragmentPlayerBinding? = null
@@ -23,8 +32,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //(activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         _binding = FragmentPlayerBinding.inflate(inflater, container, false)
+
+        injectDataIntoPlayer()
+
         return binding.root
     }
 
@@ -57,10 +68,43 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
     }
 
+    /**
+     * Called to display data in the player view with songs adapter
+     * and setup observer on song list.
+     *
+     * */
+    private fun injectDataIntoPlayer() {
+        // set observer for song list
+        playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
+            currentSong?.let {
+                binding.songName.text = currentSong.title
+                binding.artistName.text = currentSong.artist
+                CoroutineScope(Dispatchers.IO).launch {
+
+                    if(currentSong.srcCover.isNotEmpty()){
+                        val url = URL(currentSong.srcCover)
+                        val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+                        withContext(Dispatchers.Main) {
+                            binding.songImage.setImageBitmap(bmp)
+                        }
+                    }else{
+                        withContext(Dispatchers.Main) {
+                            binding.songImage.setImageResource(R.drawable.icon_music)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     /** executed on fragment destroy */
     override fun onDestroyView() {
         super.onDestroyView()
-        //(activity as AppCompatActivity?)!!.supportActionBar!!.show()
+
+        // remove observer on view destroy
+        playerViewModel.songs.removeObservers(viewLifecycleOwner)
+
         _binding = null
     }
 }

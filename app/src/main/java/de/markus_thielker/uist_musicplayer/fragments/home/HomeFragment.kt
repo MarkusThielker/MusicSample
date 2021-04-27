@@ -5,16 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import de.markus_thielker.uist_musicplayer.R
+import de.markus_thielker.uist_musicplayer.components.room.song.Song
 import de.markus_thielker.uist_musicplayer.databinding.FragmentHomeBinding
 import de.markus_thielker.uist_musicplayer.fragments.home.adapter.SongsAdapter
+import de.markus_thielker.uist_musicplayer.fragments.player.PlayerViewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     // view model variable
     private lateinit var homeViewModel: HomeViewModel
+    private val playerViewModel: PlayerViewModel by activityViewModels()
 
     // view binding variables
     private var _binding: FragmentHomeBinding? = null
@@ -45,8 +50,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
      * */
     private fun setupRecyclerView() {
 
+        val onItemClickListener: (Song) -> Unit = { item ->
+            playerViewModel.updateCurrentSong(item)
+            findNavController().navigate(R.id.action_global_navigationFragmentPlayer)
+        }
         // create adapter object
-        val songsAdapter = SongsAdapter()
+        val songsAdapter = SongsAdapter(onItemClickListener)
 
         // setup recycler view -> bind adapter
         binding.recyclerView.apply {
