@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import de.markus_thielker.uist_musicplayer.R
 import de.markus_thielker.uist_musicplayer.databinding.FragmentPlayerBinding
 
-
 class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     // view model variable
@@ -63,7 +62,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
 
         playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
-            currentSong?.let {
+
+        currentSong?.let {
                 if (currentSong.favorite) {
                     binding.likeSongButton.setImageResource(R.drawable.icon_favorites_fill)
                 } else {
@@ -81,8 +81,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     private fun injectDataIntoPlayer() {
         // set observer for song list
         playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
+
             currentSong?.let {
-                binding.songName.text = currentSong.title
+
+            binding.songName.text = currentSong.title
                 binding.artistName.text = currentSong.artist
 
                 // if cover-src is available -> load image

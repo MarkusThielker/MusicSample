@@ -53,6 +53,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
      * */
     private fun setupRecyclerView() {
 
+        // create click listener for adapter items
         val onItemClickListener: (Song) -> Unit = { item ->
             playerViewModel.updateCurrentSong(item)
             findNavController().navigate(R.id.action_global_navigationFragmentPlayer)

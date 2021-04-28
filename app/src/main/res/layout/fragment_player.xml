@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -37,24 +38,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/bottomGradient"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/linear_gradient_bottom"
-        app:layout_constraintBottom_toBottomOf="@+id/songImage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/playerControlsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/linear_gradient_bottom"
         android:padding="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
 
         <SeekBar
             android:id="@+id/musicPlayTime"
@@ -98,6 +90,7 @@
                 android:layout_weight="1"
                 android:background="#00000000"
                 android:src="@drawable/icon_skip_forward" />
+
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,7 +101,6 @@
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/musicPlayTime"
             app:layout_constraintStart_toStartOf="parent">
-
 
             <TextView
                 android:id="@+id/songName"
@@ -139,8 +131,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/songName"
                 app:layout_constraintEnd_toEndOf="@+id/SongNameHolder"
                 app:layout_constraintTop_toTopOf="@+id/songName" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

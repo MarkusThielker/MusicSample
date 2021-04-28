@@ -11,7 +11,6 @@ import de.markus_thielker.uist_musicplayer.R
 import de.markus_thielker.uist_musicplayer.components.room.song.Song
 import de.markus_thielker.uist_musicplayer.databinding.ItemCardSongLargeBinding
 
-
 class SongsAdapter(
     private val context: Context,
     private val onItemClickListener: (item: Song) -> Unit
@@ -25,8 +24,10 @@ class SongsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(context: Context, item: Song) {
+
             binding.apply {
-                lblTitle.text = item.title
+
+            lblTitle.text = item.title
                 lblArtist.text = item.artist
 
                 // if cover-src is available -> load image

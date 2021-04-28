@@ -1,8 +1,6 @@
 package de.markus_thielker.uist_musicplayer
 
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.ASSERT
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -16,8 +14,9 @@ import de.markus_thielker.uist_musicplayer.databinding.ActivityMainBinding
 import de.markus_thielker.uist_musicplayer.fragments.player.PlayerViewModel
 
 class MainActivity : AppCompatActivity() {
+
     // view model variable
-    private val playerViewModel: PlayerViewModel by viewModels{
+    private val playerViewModel: PlayerViewModel by viewModels {
         ViewModelProvider.AndroidViewModelFactory(application)
     }
 
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
 
             if (destination.id == R.id.navigationFragmentPlayer) {
                 supportActionBar?.hide()
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 supportActionBar?.show()
                 binding.bottomNavigation.visibility = View.VISIBLE
-                if(playerViewModel.currentSong.value != null){
+                if (playerViewModel.currentSong.value != null) {
                     binding.floatingActionButton.show()
                 }
             }
@@ -64,13 +63,16 @@ class MainActivity : AppCompatActivity() {
 
         // Floating button
         val fab = binding.floatingActionButton
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             navController.navigate(R.id.action_global_navigationFragmentPlayer)
         }
+
         // set observer for song list
         playerViewModel.currentSong.observe(this) { currentSong ->
-            Log.println(ASSERT,"Main Activity", currentSong?.title?:"null")
-            if (currentSong != null && navController.currentDestination?.id != R.id.navigationFragmentPlayer) {
+
+            if (currentSong != null &&
+                navController.currentDestination?.id != R.id.navigationFragmentPlayer
+            ) {
                 fab.show()
             } else {
                 fab.hide()
