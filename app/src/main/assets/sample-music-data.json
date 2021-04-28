@@ -5,7 +5,7 @@
     "artist": "Maestro Chives",
     "feature": "Egzod",
     "duration": 166,
-    "favorite": false,
+    "favorite": true,
     "srcAudio": "",
     "srcCover": "https://linkstorage.linkfire.com/medialinks/images/1e14b2bc-be4b-440c-9060-1d840d0d72da/artwork-440x440.jpg"
   },
@@ -65,7 +65,7 @@
     "artist": "Facading",
     "feature": null,
     "duration": 149,
-    "favorite": false,
+    "favorite": true,
     "srcAudio": "",
     "srcCover": "https://linkstorage.linkfire.com/medialinks/images/3ca84d3e-39e3-4ff0-a1d8-b0fb9979c781/artwork-440x440.jpg"
   },
@@ -75,7 +75,7 @@
     "artist": "Denniz Jamm",
     "feature": "Andreas Stone",
     "duration": 232,
-    "favorite": false,
+    "favorite": true,
     "srcAudio": "",
     "srcCover": "https://linkstorage.linkfire.com/medialinks/images/d04e106b-73e3-44a6-93ad-9519b89fd77e/artwork-440x440.jpg"
   },
@@ -125,7 +125,7 @@
     "artist": "Todd Helder",
     "feature": null,
     "duration": 126,
-    "favorite": false,
+    "favorite": true,
     "srcAudio": "",
     "srcCover": "https://linkstorage.linkfire.com/medialinks/images/88f2bb07-eb44-4f76-a317-6a372724abcb/artwork-440x440.jpg"
   },

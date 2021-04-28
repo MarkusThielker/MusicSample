@@ -10,6 +10,9 @@ interface SongDao {
     @Query("SELECT * FROM $SONGS_TABLE_NAME")
     fun getAll(): LiveData<List<Song>>
 
+    @Query("SELECT * FROM $SONGS_TABLE_NAME WHERE favorite == 1")
+    fun getFavorites(): LiveData<List<Song>>
+
     @Query("SELECT * FROM $SONGS_TABLE_NAME WHERE sid == :songId")
     fun findById(songId: Int): LiveData<List<Song>>
 

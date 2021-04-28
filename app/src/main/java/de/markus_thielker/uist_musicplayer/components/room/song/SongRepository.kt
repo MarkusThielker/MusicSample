@@ -9,6 +9,8 @@ class SongRepository(application: Application) {
 
     fun getAll() = songDao.getAll()
 
+    fun getFavorites() = songDao.getFavorites()
+
     fun findById(songId: Int) = songDao.findById(songId)
 
     fun findByTitle(title: String) = songDao.findByTitle(title)

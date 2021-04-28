@@ -57,6 +57,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             playerViewModel.updateCurrentSong(item)
             findNavController().navigate(R.id.action_global_navigationFragmentPlayer)
         }
+
         // create adapter object
         val songsAdapter = SongsAdapter(requireContext(), onItemClickListener)
 
