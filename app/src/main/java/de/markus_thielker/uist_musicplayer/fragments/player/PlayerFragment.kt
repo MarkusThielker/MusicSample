@@ -44,7 +44,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         val likeSongButton = binding.likeSongButton
         likeSongButton.setOnClickListener {
-            //TODO add song to liked songs
+            playerViewModel.currentSong.value?.let { playerViewModel.updateSongFavorite(it) }
         }
 
         val previousSong = binding.previousSong
@@ -60,6 +60,16 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         val stopMusic = binding.stopMusic
         stopMusic.setOnClickListener {
             //TODO stop the music
+        }
+
+        playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
+            currentSong?.let {
+                if (currentSong.favorite) {
+                    binding.likeSongButton.setImageResource(R.drawable.icon_favorites_fill)
+                } else {
+                    binding.likeSongButton.setImageResource(R.drawable.icon_nav_favorites)
+                }
+            }
         }
     }
 

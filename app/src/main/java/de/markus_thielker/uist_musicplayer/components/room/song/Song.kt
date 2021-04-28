@@ -12,7 +12,7 @@ data class Song(
     @ColumnInfo(name = "artist") val artist: String,
     @ColumnInfo(name = "feature") val feature: String?,
     @ColumnInfo(name = "duration") val duration: Int,
-    @ColumnInfo(name = "favorite") val favorite: Boolean,
+    @ColumnInfo(name = "favorite") var favorite: Boolean,
     @ColumnInfo(name = "srcAudio") val srcAudio: String,
     @ColumnInfo(name = "srcCover") val srcCover: String,
 )

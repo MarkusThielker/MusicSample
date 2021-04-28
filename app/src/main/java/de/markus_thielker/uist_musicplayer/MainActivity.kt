@@ -1,28 +1,19 @@
 package de.markus_thielker.uist_musicplayer
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.util.Log.ASSERT
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import de.markus_thielker.uist_musicplayer.databinding.ActivityMainBinding
-import de.markus_thielker.uist_musicplayer.databinding.FragmentPlayerBinding
 import de.markus_thielker.uist_musicplayer.fragments.player.PlayerViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.net.URL
 
 class MainActivity : AppCompatActivity() {
     // view model variable
@@ -79,9 +70,9 @@ class MainActivity : AppCompatActivity() {
         // set observer for song list
         playerViewModel.currentSong.observe(this) { currentSong ->
             Log.println(ASSERT,"Main Activity", currentSong?.title?:"null")
-            if (currentSong != null) {
+            if (currentSong != null && navController.currentDestination?.id != R.id.navigationFragmentPlayer) {
                 fab.show()
-            }else{
+            } else {
                 fab.hide()
             }
         }
