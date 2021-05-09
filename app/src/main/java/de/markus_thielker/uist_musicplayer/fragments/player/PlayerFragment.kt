@@ -63,7 +63,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
 
-        currentSong?.let {
+            currentSong?.let {
                 if (currentSong.favorite) {
                     binding.likeSongButton.setImageResource(R.drawable.icon_favorites_fill)
                 } else {
