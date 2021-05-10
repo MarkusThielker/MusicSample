@@ -11,4 +11,7 @@
     <string name="title_placeholder">Title placeholder</string>
     <string name="artist_placeholder">Artist placeholder</string>
 
+    <!-- hints -->
+    <string name="hint_search">Search</string>
+
 </resources>
