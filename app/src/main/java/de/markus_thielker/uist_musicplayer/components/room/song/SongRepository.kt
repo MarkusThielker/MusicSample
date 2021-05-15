@@ -13,9 +13,7 @@ class SongRepository(application: Application) {
 
     fun findById(songId: Int) = songDao.findById(songId)
 
-    fun findByTitle(title: String) = songDao.findByTitle(title)
-
-    fun findByArtist(artist: String) = songDao.findByArtist(artist)
+    fun findByString(string: String) = songDao.findByString(string)
 
     fun updateSong(song: Song) = songDao.updateSong(song)
 }

@@ -3,6 +3,7 @@ package de.markus_thielker.uist_musicplayer.components.room.song
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.markus_thielker.uist_musicplayer.utilities.SONGS_TABLE_NAME
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SongDao {
@@ -16,11 +17,8 @@ interface SongDao {
     @Query("SELECT * FROM $SONGS_TABLE_NAME WHERE sid == :songId")
     fun findById(songId: Int): LiveData<List<Song>>
 
-    @Query("SELECT * FROM $SONGS_TABLE_NAME WHERE title LIKE :title")
-    fun findByTitle(title: String): LiveData<List<Song>>
-
-    @Query("SELECT * FROM $SONGS_TABLE_NAME WHERE artist LIKE :artist")
-    fun findByArtist(artist: String): LiveData<List<Song>>
+    @Query("SELECT * FROM $SONGS_TABLE_NAME WHERE title LIKE '%' || :string || '%' OR artist LIKE '%' || :string || '%' OR feature LIKE '%' || :string || '%'")
+    fun findByString(string: String): Flow<List<Song>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg songs: Song)

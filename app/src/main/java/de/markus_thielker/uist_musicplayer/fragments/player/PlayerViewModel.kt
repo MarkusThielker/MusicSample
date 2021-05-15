@@ -4,10 +4,13 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import de.markus_thielker.uist_musicplayer.components.room.song.Song
 import de.markus_thielker.uist_musicplayer.components.room.song.SongRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.concurrent.timerTask
@@ -126,7 +129,21 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
             songRepository.updateSong(item)
         }
     }
+  
+  
+    val searchString = MutableStateFlow("")
 
+    fun updateSearch(newSearchString: String) {
+        searchString.value = newSearchString
+    }
+
+    private val searchFlow = searchString.flatMapLatest {
+        songRepository.findByString(it)
+    }
+
+    val searchResults = searchFlow.asLiveData()
+  
+  
     /** Called at the end of the lifecycle */
     override fun onCleared() {
         super.onCleared()
