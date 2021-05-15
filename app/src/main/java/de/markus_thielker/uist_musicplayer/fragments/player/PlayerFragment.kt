@@ -58,9 +58,21 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         val stopMusic = binding.stopMusic
         stopMusic.setOnClickListener {
-            //TODO stop the music
+            playerViewModel.updateCurrentlyPlaying()
         }
 
+        // observer song progress and update slider
+        playerViewModel.songProgress.observe(viewLifecycleOwner) { progress ->
+            binding.musicPlayTime.progress = progress.toInt()
+        }
+
+        // observe is song is playing and change play/pause icon accordingly
+        playerViewModel.currentlyPlaying.observe(viewLifecycleOwner) { playing ->
+            if (playing) binding.stopMusic.setImageResource(R.drawable.icon_pause)
+            else binding.stopMusic.setImageResource(R.drawable.icon_play)
+        }
+
+        // observe current song and check on change, if song is marked as favorite
         playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
 
             currentSong?.let {

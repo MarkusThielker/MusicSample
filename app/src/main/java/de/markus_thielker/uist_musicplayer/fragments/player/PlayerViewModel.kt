@@ -9,6 +9,8 @@ import de.markus_thielker.uist_musicplayer.components.room.song.SongRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.concurrent.timerTask
 
 class PlayerViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -16,6 +18,8 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     val songs: LiveData<List<Song>> = songRepository.getAll()
 
+
+    // variables and functions for current song
     private val _currentSong: MutableLiveData<Song?> =
         MutableLiveData<Song?>().apply { value = null }
 
@@ -23,7 +27,70 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     fun updateCurrentSong(item: Song) {
         _currentSong.value = item
+        secondsLeft = item.duration
+        _currentlyPlaying.value = true
+
+        scheduleSongProgress()
     }
+
+
+    // variables and functions for song progress
+    private val _songProgress: MutableLiveData<Double> =
+        MutableLiveData<Double>().apply { value = 0.00 }
+
+    val songProgress: LiveData<Double> = _songProgress
+
+    private var secondsLeft: Int = 0
+
+    private var timer = Timer()
+
+    private fun scheduleSongProgress() {
+
+        // reset timer
+        timer.cancel()
+        timer = Timer()
+
+        // schedule countdown task for every second
+        timer.scheduleAtFixedRate(
+
+            // countdown task
+            timerTask {
+
+                // countdown while time left
+                if (secondsLeft > 0) {
+
+                    // count down and update progress
+                    secondsLeft -= 1
+                    _songProgress
+                        .postValue((((currentSong.value?.duration?.toDouble()!! / secondsLeft) - 1) * 100) / 2)
+
+                } else {
+                    // cancel after time ran out
+                    timer.cancel()
+                }
+
+            }, 1000, 1000
+        )
+    }
+
+
+    // variables and functions for currently playing song
+    private val _currentlyPlaying: MutableLiveData<Boolean> =
+        MutableLiveData<Boolean>().apply { value = false }
+
+    val currentlyPlaying: LiveData<Boolean> = _currentlyPlaying
+
+    fun updateCurrentlyPlaying() {
+
+        if (_currentlyPlaying.value == true) {
+            timer.cancel()
+        } else {
+            scheduleSongProgress()
+        }
+
+        _currentlyPlaying.value = !_currentlyPlaying.value!!
+    }
+
 
     fun updateSongFavorite(item: Song) {
 
@@ -34,5 +101,11 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         CoroutineScope(Dispatchers.IO).launch {
             songRepository.updateSong(item)
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        timer.cancel()
     }
 }
