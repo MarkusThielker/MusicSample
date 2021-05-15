@@ -36,26 +36,31 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // click listener to navigate backwards
         val backButton = binding.backButton
         backButton.setOnClickListener {
             findNavController().navigateUp()
         }
 
+        // click listener to favorite button
         val likeSongButton = binding.likeSongButton
         likeSongButton.setOnClickListener {
             playerViewModel.currentSong.value?.let { playerViewModel.updateSongFavorite(it) }
         }
 
+        // click listener to play previous song
         val previousSong = binding.previousSong
         previousSong.setOnClickListener {
             //TODO play previous song
         }
 
+        // click listener to play next song
         val nextSong = binding.nextSong
         nextSong.setOnClickListener {
             //TODO play next song
         }
 
+        // click listener to play/pause the music
         val stopMusic = binding.stopMusic
         stopMusic.setOnClickListener {
             playerViewModel.updateCurrentlyPlaying()
@@ -91,12 +96,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
      *
      * */
     private fun injectDataIntoPlayer() {
+
         // set observer for song list
         playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
 
             currentSong?.let {
 
-            binding.songName.text = currentSong.title
+                // bind strings to text views
+                binding.songName.text = currentSong.title
                 binding.artistName.text = currentSong.artist
 
                 // if cover-src is available -> load image

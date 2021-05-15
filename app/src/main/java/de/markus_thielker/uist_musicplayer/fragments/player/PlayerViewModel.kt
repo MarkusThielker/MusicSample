@@ -25,6 +25,12 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     val currentSong: LiveData<Song?> = _currentSong
 
+    /**
+     * Updates the current song in the view model.
+     * Also updates all variables used for further processing
+     * and schedules progress timer.
+     *
+     * */
     fun updateCurrentSong(item: Song) {
         _currentSong.value = item
         secondsLeft = item.duration
@@ -40,10 +46,17 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     val songProgress: LiveData<Double> = _songProgress
 
+    // storing the seconds left for this song to survive timer cancellation
     private var secondsLeft: Int = 0
 
+    // timer, the fake playback is scheduled on
     private var timer = Timer()
 
+    /**
+     * Schedules a timer task, calculating the current progress of th song playback
+     * in percent every second.
+     *
+     * */
     private fun scheduleSongProgress() {
 
         // reset timer
@@ -80,18 +93,29 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     val currentlyPlaying: LiveData<Boolean> = _currentlyPlaying
 
+    /**
+     * Updates boolean variable in view model and stops or
+     * schedules progress timer according to the new playback state.
+     *
+     * */
     fun updateCurrentlyPlaying() {
 
+        // cancel timer if music stopped, else schedule timer
         if (_currentlyPlaying.value == true) {
             timer.cancel()
         } else {
             scheduleSongProgress()
         }
 
+        // negate currentlyPlaying
         _currentlyPlaying.value = !_currentlyPlaying.value!!
     }
 
 
+    /**
+     * Updates the "marked as favorite" value for the song in the database.
+     *
+     * */
     fun updateSongFavorite(item: Song) {
 
         // update current song to trigger observer -> ui icon changed
@@ -103,6 +127,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    /** Called at the end of the lifecycle */
     override fun onCleared() {
         super.onCleared()
 
