@@ -60,7 +60,7 @@
 
         <LinearLayout
             android:id="@+id/musicButtons"
-            android:layout_width="170dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/playerControlsLayout"
@@ -70,24 +70,30 @@
             <ImageButton
                 android:id="@+id/previousSong"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
+                android:scaleX="1.75"
+                android:scaleY="1.75"
                 android:background="#00000000"
                 android:src="@drawable/icon_skip_back" />
 
             <ImageButton
                 android:id="@+id/stopMusic"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
+                android:scaleX="1.75"
+                android:scaleY="1.75"
                 android:background="#00000000"
-                android:src="@drawable/icon_play_circle" />
+                android:src="@drawable/icon_play" />
 
             <ImageButton
                 android:id="@+id/nextSong"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_weight="1"
+                android:scaleX="1.75"
+                android:scaleY="1.75"
                 android:background="#00000000"
                 android:src="@drawable/icon_skip_forward" />
 

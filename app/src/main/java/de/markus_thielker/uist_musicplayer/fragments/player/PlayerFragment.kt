@@ -36,34 +36,51 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // click listener to navigate backwards
         val backButton = binding.backButton
         backButton.setOnClickListener {
             findNavController().navigateUp()
         }
 
+        // click listener to favorite button
         val likeSongButton = binding.likeSongButton
         likeSongButton.setOnClickListener {
             playerViewModel.currentSong.value?.let { playerViewModel.updateSongFavorite(it) }
         }
 
+        // click listener to play previous song
         val previousSong = binding.previousSong
         previousSong.setOnClickListener {
             //TODO play previous song
         }
 
+        // click listener to play next song
         val nextSong = binding.nextSong
         nextSong.setOnClickListener {
             //TODO play next song
         }
 
+        // click listener to play/pause the music
         val stopMusic = binding.stopMusic
         stopMusic.setOnClickListener {
-            //TODO stop the music
+            playerViewModel.updateCurrentlyPlaying()
         }
 
+        // observer song progress and update slider
+        playerViewModel.songProgress.observe(viewLifecycleOwner) { progress ->
+            binding.musicPlayTime.progress = progress.toInt()
+        }
+
+        // observe is song is playing and change play/pause icon accordingly
+        playerViewModel.currentlyPlaying.observe(viewLifecycleOwner) { playing ->
+            if (playing) binding.stopMusic.setImageResource(R.drawable.icon_pause)
+            else binding.stopMusic.setImageResource(R.drawable.icon_play)
+        }
+
+        // observe current song and check on change, if song is marked as favorite
         playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
 
-        currentSong?.let {
+            currentSong?.let {
                 if (currentSong.favorite) {
                     binding.likeSongButton.setImageResource(R.drawable.icon_favorites_fill)
                 } else {
@@ -79,12 +96,14 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
      *
      * */
     private fun injectDataIntoPlayer() {
+
         // set observer for song list
         playerViewModel.currentSong.observe(viewLifecycleOwner) { currentSong ->
 
             currentSong?.let {
 
-            binding.songName.text = currentSong.title
+                // bind strings to text views
+                binding.songName.text = currentSong.title
                 binding.artistName.text = currentSong.artist
 
                 // if cover-src is available -> load image
