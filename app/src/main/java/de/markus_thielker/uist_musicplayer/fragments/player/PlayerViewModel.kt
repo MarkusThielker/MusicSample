@@ -1,8 +1,6 @@
 package de.markus_thielker.uist_musicplayer.fragments.player
 
 import android.app.Application
-import android.util.Log
-import android.util.Log.ASSERT
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -119,6 +117,8 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         timer.cancel()
         timer = Timer()
 
+        val duration = currentSong.value!!.duration.toDouble()
+
         // schedule countdown task for every second
         timer.scheduleAtFixedRate(
 
@@ -130,8 +130,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
                     // count down and update progress
                     secondsLeft -= 1
-                    _songProgress
-                        .postValue((((currentSong.value?.duration?.toDouble()!! / secondsLeft) - 1) * 100) / 2)
+                    _songProgress.postValue((1 - (secondsLeft / duration)) * 100)
 
                 } else {
                     // cancel after time ran out
@@ -150,8 +149,11 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     /** Called on seek bar progress changes */
     fun onProgressChanged(progress: Int) {
-        secondsLeft = currentSong.value!!.duration - (currentSong.value!!.duration.toDouble() * (progress/100.0)).toInt()
-        Log.println(ASSERT, "", secondsLeft.toString())
+
+        val duration = currentSong.value!!.duration.toDouble()
+        val passedSecs = duration * (progress / 100.0)
+        secondsLeft = (duration - passedSecs).toInt()
+
         _currentlyPlaying.value = true
         scheduleSongProgress()
     }
