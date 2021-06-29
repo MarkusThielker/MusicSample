@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.markus_thielker.uist_musicplayer.R
@@ -17,13 +15,6 @@ import de.markus_thielker.uist_musicplayer.fragments.favorites.adapter.FavoriteS
 import de.markus_thielker.uist_musicplayer.fragments.player.PlayerViewModel
 
 class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
-
-    // home view model access
-    private val favoritesViewModel: FavoritesViewModel by viewModels {
-        ViewModelProvider.AndroidViewModelFactory(
-            requireActivity().application
-        )
-    }
 
     // player view model access
     private val playerViewModel: PlayerViewModel by activityViewModels()
@@ -69,7 +60,7 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
         }
 
         // set observer for song list
-        favoritesViewModel.favorites.observe(viewLifecycleOwner) { songs ->
+        playerViewModel.favorites.observe(viewLifecycleOwner) { songs ->
             // submit new dataset to adapter
             favoriteSongsAdapter.submitList(songs)
         }
@@ -78,6 +69,10 @@ class FavoritesFragment : Fragment(R.layout.fragment_favorites) {
     /** executed on fragment destroy */
     override fun onDestroyView() {
         super.onDestroyView()
+
+        // remove observer on view destroy
+        playerViewModel.favorites.removeObservers(viewLifecycleOwner)
+
         _binding = null
     }
 }
