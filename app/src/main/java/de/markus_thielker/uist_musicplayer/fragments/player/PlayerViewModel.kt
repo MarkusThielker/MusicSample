@@ -1,6 +1,8 @@
 package de.markus_thielker.uist_musicplayer.fragments.player
 
 import android.app.Application
+import android.util.Log
+import android.util.Log.ASSERT
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -83,6 +85,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
                 } else {
                     // cancel after time ran out
                     timer.cancel()
+                    playNextSong()
                 }
 
             }, 1000, 1000
@@ -149,5 +152,33 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         super.onCleared()
 
         timer.cancel()
+    }
+
+    /** play the previous song */
+    fun playPreviousSong() {
+
+        val prevId = currentSong.value!!.sid - 1
+
+        Log.println(ASSERT, "DEBUG-prev", "ID = ${if (prevId < 1) 16 else prevId}")
+
+        val song : LiveData<List<Song>> = songRepository.findById( if (prevId < 1) 16 else prevId )
+
+        Log.println(ASSERT, "DEBUG-prev", song.value.toString())
+
+        song.value?.get(0)?.let { updateCurrentSong(it) }
+    }
+
+    /** play the next song */
+    fun playNextSong() {
+
+        val nextId = currentSong.value!!.sid + 1
+
+        Log.println(ASSERT, "DEBUG-next", "ID = ${if (nextId > 16) 1 else nextId}")
+
+        val song : LiveData<List<Song>> = songRepository.findById( if (nextId > 16) 1 else nextId )
+
+        Log.println(ASSERT, "DEBUG-next", song.value.toString())
+
+        song.value?.get(0)?.let { updateCurrentSong(it) }
     }
 }
