@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager.VERTICAL
@@ -18,13 +16,6 @@ import de.markus_thielker.uist_musicplayer.fragments.home.adapter.SongsAdapter
 import de.markus_thielker.uist_musicplayer.fragments.player.PlayerViewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
-
-    // home view model access
-    private val homeViewModel: HomeViewModel by viewModels {
-        ViewModelProvider.AndroidViewModelFactory(
-            requireActivity().application
-        )
-    }
 
     // player view model access
     private val playerViewModel: PlayerViewModel by activityViewModels()
@@ -69,7 +60,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         // set observer for song list
-        homeViewModel.songs.observe(viewLifecycleOwner) { songs ->
+        playerViewModel.songs.observe(viewLifecycleOwner) { songs ->
             // submit new dataset to adapter
             songsAdapter.submitList(songs)
         }
@@ -80,7 +71,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onDestroyView()
 
         // remove observer on view destroy
-        homeViewModel.songs.removeObservers(viewLifecycleOwner)
+        playerViewModel.songs.removeObservers(viewLifecycleOwner)
 
         _binding = null
     }

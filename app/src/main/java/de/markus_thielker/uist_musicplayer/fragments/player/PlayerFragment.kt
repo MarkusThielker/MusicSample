@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -66,6 +67,23 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             playerViewModel.updateCurrentlyPlaying()
         }
 
+        // click listener to play next song
+        val songProgress = binding.musicPlayTime
+        songProgress.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser) playerViewModel.onProgressChanged(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                return
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                return
+            }
+        })
+
         // observer song progress and update slider
         playerViewModel.songProgress.observe(viewLifecycleOwner) { progress ->
             binding.musicPlayTime.progress = progress.toInt()
@@ -123,7 +141,9 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         super.onDestroyView()
 
         // remove observer on view destroy
-        playerViewModel.songs.removeObservers(viewLifecycleOwner)
+        playerViewModel.currentSong.removeObservers(viewLifecycleOwner)
+        playerViewModel.currentlyPlaying.removeObservers(viewLifecycleOwner)
+        playerViewModel.songProgress.removeObservers(viewLifecycleOwner)
 
         _binding = null
     }

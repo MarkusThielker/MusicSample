@@ -88,6 +88,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     /** executed on fragment destroy */
     override fun onDestroyView() {
         super.onDestroyView()
+
+        // remove observer on view destroy
+        playerViewModel.searchResults.removeObservers(viewLifecycleOwner)
+
         _binding = null
     }
 }
