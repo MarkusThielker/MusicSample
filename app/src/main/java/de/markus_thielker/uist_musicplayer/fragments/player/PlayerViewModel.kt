@@ -91,7 +91,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         }
 
         // negate currentlyPlaying
-        _currentlyPlaying.value = !_currentlyPlaying.value!!
+        _currentlyPlaying.postValue(!_currentlyPlaying.value!!)
     }
 
     /** Updates the "marked as favorite" value for the song in the database. */
