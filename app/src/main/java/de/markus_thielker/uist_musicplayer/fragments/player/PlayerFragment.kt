@@ -52,13 +52,13 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         // click listener to play previous song
         val previousSong = binding.previousSong
         previousSong.setOnClickListener {
-            //TODO play previous song
+            playerViewModel.playPreviousSong()
         }
 
         // click listener to play next song
         val nextSong = binding.nextSong
         nextSong.setOnClickListener {
-            //TODO play next song
+            playerViewModel.playNextSong()
         }
 
         // click listener to play/pause the music
@@ -134,7 +134,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             }
         }
     }
-
 
     /** executed on fragment destroy */
     override fun onDestroyView() {
