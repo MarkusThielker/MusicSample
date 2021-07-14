@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import de.markus_thielker.uist_musicplayer.R
+import de.markus_thielker.uist_musicplayer.components.room.song.Song
 import de.markus_thielker.uist_musicplayer.databinding.FragmentPlayerBinding
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
@@ -52,13 +53,21 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         // click listener to play previous song
         val previousSong = binding.previousSong
         previousSong.setOnClickListener {
-            //TODO play previous song
+
+            val songIndex: Int = getSongIndex();
+            if (songIndex - 1 >= 0){
+                playerViewModel.updateCurrentSong(playerViewModel.songs.value!![songIndex - 1])
+            }
         }
 
         // click listener to play next song
         val nextSong = binding.nextSong
         nextSong.setOnClickListener {
-            //TODO play next song
+
+            val songIndex: Int = getSongIndex();
+            if (songIndex + 1 < playerViewModel.songs.value!!.size){
+                playerViewModel.updateCurrentSong(playerViewModel.songs.value!![songIndex + 1])
+            }
         }
 
         // click listener to play/pause the music
@@ -146,5 +155,17 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         playerViewModel.songProgress.removeObservers(viewLifecycleOwner)
 
         _binding = null
+    }
+
+    /**
+     * Called to return the index of the current Song in the songs list
+     */
+    private fun getSongIndex(): Int {
+        for ((index: Int, song: Song) in playerViewModel.songs.value!!.withIndex()){
+            if (playerViewModel.currentSong.value!!.sid == song.sid){
+                return index;
+            }
+        }
+        return 0;
     }
 }
